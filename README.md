@@ -21,7 +21,7 @@ Use GIT:
 
 2. Git-clone this repository
 
-    **git clone https://github.com/magekinnarus/ComfyUI-DJ_Nodes.git**
+    **git clone https://github.com/magekinnarus/ComfyUI-DJ_nodes.git**
 
 3. Restart ComfyUI after installing, and the node will be available for you to use.
 
