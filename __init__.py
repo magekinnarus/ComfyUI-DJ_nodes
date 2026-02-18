@@ -1,9 +1,13 @@
-from .AddParam import AddParam  # Import the AddParam class
+from .AddParam import AddParam, SDXLCliploader
 
 NODE_CLASS_MAPPINGS = {
-    "AddParam": AddParam,  # Key matches class name (AddParam)
+    "AddParam": AddParam,
+    "SDXLCliploader": SDXLCliploader
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AddParam": "Add Parameterization Info",
+    "AddParam": "Add Model Parameterization",
+    "SDXLCliploader": "Load Extracted SDXL CLIP"
 }
+
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

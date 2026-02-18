@@ -1,4 +1,4 @@
-# ComfyUI-V-Prediction-Node
+# AddParam Node
 Node to set v-prediction sampling when using SDXL and other models that may not have the necessary metadata to identify it as a v-prediction model.
 This node is useful for quantized models since they lack the necessary metadata.
 
@@ -12,6 +12,10 @@ The workflow is simple.
 3. Select "epsilon" or "v_prediction" from the dropdown menu.
 
 ![Screenshot of AddParam node](images/Workflow01.png)
+
+# "SDXLCliploader": "Load Extracted SDXL CLIP"
+Node for loading extracted SDXL clip models. This loader is specifically designed for a bundled Clip_G and CLIP_L safetensors file. By emulating checkpointloadersimple, this node eliminates any prefix + missing layers +qkv handling required for extracted Clip_G and Clip_L to load in ComfyUI.
+
 ## Installation
 Use GIT:
 
