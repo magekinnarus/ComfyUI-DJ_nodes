@@ -1,4 +1,5 @@
-from .AddParam import AddParam, SDXLCliploader
+# Classes are defined in nodes.py rather than separate modules.
+from .nodes import AddParam, SDXLCliploader
 
 NODE_CLASS_MAPPINGS = {
     "AddParam": AddParam,
