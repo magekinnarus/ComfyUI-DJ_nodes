@@ -8,7 +8,7 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "AddParam": "Add Model Parameterization",
-    "SDXLCliploader": "Load Extracted SDXL CLIP"
+    "SDXLCliploader": "Load Extracted Dual SDXL CLIPs"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
