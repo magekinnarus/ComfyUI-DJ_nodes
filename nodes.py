@@ -2,8 +2,22 @@ import torch
 import comfy.sd
 import comfy.utils
 import folder_paths
+import os
+import json
 
-class SDXLCliploader:
+def get_presets():
+    presets_path = os.path.join(os.path.dirname(__file__), "Prompt_presets", "base_preset.json")
+    if not os.path.exists(presets_path):
+        return {}
+    try:
+        with open(presets_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return {item["name"]: item for item in data}
+    except Exception as e:
+        print(f"Error loading presets: {e}")
+        return {}
+
+class DJ_cliploader:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {"clip_name": (folder_paths.get_filename_list("clip"), )}}
@@ -90,7 +104,7 @@ class SDXLCliploader:
         
         return (clip,)
 
-class AddParam:
+class DJ_V_Prediction:
     parameterization_options = ["epsilon", "v_prediction"]  # Both options in the dropdown
 
     @classmethod
@@ -121,13 +135,78 @@ class AddParam:
 
         return (m,)  # Return the (potentially modified) model
 
-# Ensure both nodes are registered for ComfyUI
+class DJ_PromptPresets:
+    @classmethod
+    @classmethod
+    def INPUT_TYPES(s):
+        presets = get_presets()
+        preset_names = ["None"] + list(presets.keys())
+        return {
+            "required": {
+                "clip": ("CLIP",),
+                "preset_1": (preset_names,),
+                "preset_2": (preset_names,),
+                "preset_3": (preset_names,),
+                "preset_4": (preset_names,),
+            },
+            "optional": {
+                "generated_positive": ("STRING", {"multiline": True, "default": "", "forceInput": False}),
+                "generated_negative": ("STRING", {"multiline": True, "default": "", "forceInput": False}),
+            }
+        }
+    
+    RETURN_TYPES = ("CONDITIONING", "CONDITIONING", "STRING", "STRING")
+    RETURN_NAMES = ("POSITIVE", "NEGATIVE", "pos_text", "neg_text")
+    FUNCTION = "apply_presets"
+    CATEGORY = "DJ_nodes/Prompting"
+
+    def apply_presets(self, clip, preset_1, preset_2, preset_3, preset_4, generated_positive="", generated_negative=""):
+        presets = get_presets()
+        selected_presets = [preset_1, preset_2, preset_3, preset_4]
+        
+        final_pos_str = ""
+        final_neg_str = ""
+
+        # Concatenate strings first
+        for p_name in selected_presets:
+            if p_name == "None" or p_name not in presets:
+                continue
+            
+            p_data = presets[p_name]
+            p_pos = p_data.get("prompt", "").strip()
+            p_neg = p_data.get("negative_prompt", "").strip()
+            
+            if p_pos:
+                final_pos_str = (final_pos_str + ", " + p_pos) if final_pos_str else p_pos
+            if p_neg:
+                final_neg_str = (final_neg_str + ", " + p_neg) if final_neg_str else p_neg
+
+        def encode_text(text, clip):
+            tokens = clip.tokenize(text)
+            cond, pooled = clip.encode_from_tokens(tokens, return_pooled=True)
+            return [[cond, {"pooled_output": pooled}]]
+
+        # Encode once
+        pos_cond = encode_text(final_pos_str, clip)
+        neg_cond = encode_text(final_neg_str, clip)
+
+        return {
+            "ui": {
+                "generated_positive": [final_pos_str],
+                "generated_negative": [final_neg_str]
+            },
+            "result": (pos_cond, neg_cond, final_pos_str, final_neg_str)
+        }
+
+# Ensure nodes are registered for ComfyUI
 NODE_CLASS_MAPPINGS = {
-    "AddParam": AddParam,
-    "SDXLCliploader": SDXLCliploader
+    "DJ_V_Prediction": DJ_V_Prediction,
+    "DJ_cliploader": DJ_cliploader,
+    "DJ_PromptPresets": DJ_PromptPresets
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AddParam": "Add Model Parameterization",
-    "SDXLCliploader": "Load Extracted SDXL CLIP"
+    "DJ_V_Prediction": "DJ V Prediction Param",
+    "DJ_cliploader": "DJ Load SDXL CLIPs",
+    "DJ_PromptPresets": "DJ Prompt Presets"
 }
