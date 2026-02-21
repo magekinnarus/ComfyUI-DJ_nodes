@@ -33,6 +33,17 @@ Specifically designed for loading extracted SDXL CLIP models bundled into a sing
 - Injects dummy weights for missing layers (like `text_projection`) to ensure compatibility with standard loaders.
 - Eliminates "missing layer" errors when loading standalone CLIP files in ComfyUI.
 
+![Workflow Screenshot](images/Workflow02.png)
+
+### ⚠️ CRITICAL: SDXL GGUF Quantize Tool
+
+I have made a simple local app that you can run to extract SDXL models and quantize Unet to GGUF format.
+
+By default, this tool will extract "Bundled CLIPs" in safetensors format that is designed to be used with this node.
+
+You can get the tool here:
+👉 [Download SDXL GGUFQuantize Tool Here](https://github.com/magekinnarus/SDXL_GGUF_Quantize_Tool)
+
 ---
 
 ### 3. DJ Prompt Presets
