@@ -47,12 +47,11 @@ You can get the tool here:
 ---
 
 ### 3. DJ Prompt Presets
-A specialized prompting node that lets you quickly apply pre-defined styles or prompt blocks.
+A specialized prompting node that lets you quickly apply pre-defined styles or prompt blocks. I made this to add model specific prompt blocks for Pony and Illustrious and style blocks such as hyperrealistic, digital illustration, fantasy, and others.
 
 **Key Features:**
 - **4 Preset Slots**: Select up to 4 different presets from `Prompt_presets/base_preset.json`.
 - **Dynamic Concatenation**: Prompts and negative prompts from selected presets are automatically combined.
-- **Optional Manual Input**: Includes multiline text fields for adding custom positive/negative strings to the preset sequence.
 - **UI Feedback**: Displays the final concatenated positive and negative prompt strings directly on the node in ComfyUI.
 
 **Configuration:**
