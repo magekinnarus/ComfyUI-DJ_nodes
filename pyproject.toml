@@ -1,6 +1,6 @@
 [project]
-name = "v-prediction-node"
-description = "Node to set v-prediction sampling when using SDXL and other models that may not have the necessary metadata to identify it as a v-prediction model. This node is useful for quantized models since they lack the necessary metadata."
+name = "ComfyUI-DJ_nodes"
+description = "A collection of custom nodes for ComfyUI designed to streamline workflows, specifically for SDXL, quantized models, and prompt management."
 version = "1.0.0"
 license = {file = "LICENSE"}
 
