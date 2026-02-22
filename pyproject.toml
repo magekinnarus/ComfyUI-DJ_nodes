@@ -1,0 +1,14 @@
+[project]
+name = "v-prediction-node"
+description = "Node to set v-prediction sampling when using SDXL and other models that may not have the necessary metadata to identify it as a v-prediction model. This node is useful for quantized models since they lack the necessary metadata."
+version = "1.0.0"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/magekinnarus/ComfyUI-V-Prediction-Node"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-V-Prediction-Node"
+Icon = ""
